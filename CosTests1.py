@@ -1,8 +1,8 @@
 class PhotonClass():
-    def __init__(weight,position,direction):
-        PhotonClass.weight=weight
-        PhotonClass.position=position
-        PhotonClass.direction=direction
+    def __init__(self,weight,position,direction):
+        self.weight=weight
+        self.position=position
+        self.direction=direction
         return
     
 #Assume source location matrix looks like this
@@ -17,12 +17,12 @@ def SourceDirectionCosine(SLM):
         for coordinate in XYZ:
             DirectionCosineXYZ.append(elements[coordinate]/rmsOfCoordiates)
         DirectionCosineArray.append(DirectionCosineXYZ)
-return DirectionCosineArray
+    return DirectionCosineArray
 #I don't think I understand the code well enough. Ask Masaki for clarifications /Cosmin
 
 #Tests for Taiga /Cosmin
 def Function1Test(Function1):
-    testPhoton=photonClass(1,[0,0,0],[0,0,1])
+    testPhoton=PhotonClass(1,[0,0,0],[0,0,1])
     testPhoton=Function1(PhotonClass)
     assert testPhoton.position[0]==testPhoton.position[1]==0
     return
