@@ -1,14 +1,21 @@
 from numpy import random as rnd
 import numpy as np
 
-def function0(vector, point, xLength = 1, yLength = 1):
+def function0(vector, point, xLength = 1, yLength = 1, circular = False):
     "inputs 1*3 arrays for point and vector, to generate a point within the plane these define and the constraints xLength and yLength"
     defaultPlane = np.array([0, 0, 1]) #plane where coordinates are generated
     vector = vector / sum(vector**2) ** (1/2) #normalises input vector
 
     #generate an x and y coordinate on the (0,0,1) plane going thorugh the origin
-    x = rnd.random()*xLength - xLength/2
-    y = rnd.random()*yLength - yLength/2
+    if circular != False:
+        #to generate points on plane within a circle
+        x = rnd.random()*circular - circular/2
+        circular2 = 2*((circular/2)**2 - x**2)**(1/2)
+        y = rnd.random()*circular2 - circular2/2
+    else:
+        #to generate points on plane within a rectangle
+        x = rnd.random()*xLength - xLength/2
+        y = rnd.random()*yLength - yLength/2
     
     #finds the angle between the plane 
     angle = -np.arccos(np.dot(defaultPlane, vector))
@@ -33,6 +40,5 @@ def function0(vector, point, xLength = 1, yLength = 1):
     #Organises coordinates xr, yr, zr into a point on the wanted plane
     onPlane = np.array([xr, yr, zr])
     
-    #not done, will add to integrate photon class
-    #might add posibility of circular source
+    #not done, will add to integrate with photonclass
     return onPlane
