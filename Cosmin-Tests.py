@@ -26,3 +26,19 @@ def Function1Test(Function1):
     testPhoton=Function1(PhotonClass)
     assert testPhoton.position[0]==testPhoton.position[1]==0
     return
+#Tests for Taiga /Cosmin
+def Function2ScatterTest(Function2Scatter,finalPosition,matrix, listOfLuminosities):
+    testPhoton=PhotonClass(1,[0,0,0],[0,0,1])
+    position, luminosity, testPhoton=Function2Scatter()
+    desiredLuminosity=0
+    desiredPositon=[0,0,0]
+    semaL=True
+    semaP=True
+    #semaphore for luminosity:
+    if(luminosity!=desiredLuminosity):
+        semaL=False
+    if(position!=desiredPosition):
+        semaP=False
+    assert (semaL and semaP)==True
+    return 
+    #NOT YET DONE, REWORKS PROPOSED
