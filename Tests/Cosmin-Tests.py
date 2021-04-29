@@ -37,7 +37,7 @@ def Function2ScatterTest(Function2Scatter,finalPosition,matrix, listOfLuminositi
     #semaphore for luminosity:
     if(luminosity!=desiredLuminosity):
         semaL=False
-    if(position!=desiredPosition):
+    if(position!=[0,0,0]):
         semaP=False
     assert (semaL and semaP)==True
     return 
