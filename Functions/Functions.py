@@ -5,3 +5,14 @@ def boundaryDetection(old_position, new_position,matrix):
     else:
         #transmit_or_reflect()//insert the function here when it's done
         return
+
+import numpy.random as rnd
+
+def rouletteSurvive(photon, treshHold):
+    """Determines if a photon survives or not based on its weight and a set reshold"""
+    if photon.weight < tresHold:
+        a = rnd.randint(0, 1/treshHold) #This one is very breakable. Must be improved
+        if a == 1:
+            photon.weight = 1
+    else:
+        return
