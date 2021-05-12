@@ -5,12 +5,15 @@ class PhotonClass():
         self.position=position
         self.direction=direction
         return
-    def rouletteSurvive(self):
-        #m is given by the 1 in m chances to survive. What value should m have?
-        m=5
-        if(rando.random()<(1/m)):
-            self.weight*=m
+    def rouletteSurvive(self,treshold):
+        if(self.weight<treshold):
+            #m is given by the 1 in m chances to survive. What value should m have?
+            m=5
+            if(rando.random()<(1/m)):
+                self.weight*=m
+            else:
+                self.weight=0
+            return
         else:
-            self.weight=0
-        return
+            return
     
