@@ -5,6 +5,7 @@ def boundaryDetection(old_position, new_position,matrix):
     else:
         #transmit_or_reflect()//insert the function here when it's done
         return
+        '''
 def rouletteSurvive(photon, treshHold):
     """Determines if a photon survives or not based on its weight and a set reshold
     /aight Cosmin here: Please check the method I made in the Photon class. I think we should talk about it."""
@@ -14,3 +15,4 @@ def rouletteSurvive(photon, treshHold):
             photon.weight = 1
     else:
         return
+        '''
