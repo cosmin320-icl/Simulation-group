@@ -25,3 +25,22 @@ print("Power after reflection: {}, P after Transmission: {}".format(PRef,PTra))
 #New direction
 theta2 = math.asin(n1/n2*math.sin(theta1))
 print("New direction, theta2:", theta2)
+
+import math 
+
+def ReflectOrTransmit(n1, n2, theta1, Pincident):
+    """Takes incident angle in radians, refractive inedecies of bodies and incident power. 
+    Returns reflected and transmited power along with refraction angle"""
+    #tried to make a function of the stuff above
+    Rs = ((n1*math.cos(theta1)-n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n1*math.cos(theta1)+n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+    Rp = ((-n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+
+    Reff = 0.5*(Rs+Rp)     #Effective reflectance
+    T = 1-Reff     #Transmittance
+    PRef = Pincident*Reff     #Reflected Power = incident P * R
+    PTra = Pincident*T     #Transmitted P = incident P * T
+    
+    #new direction
+    theta2 = math.asin(n1/n2*math.sin(theta1))
+    
+    return theta2, PRef, PTra
