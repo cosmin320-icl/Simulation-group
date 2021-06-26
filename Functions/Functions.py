@@ -1,9 +1,58 @@
 #requires transmit or reflect
+#by Masaki
+
+import math
+### Material information (Dummy values) 
+n1=1.000293     #Refractive index (First medium)
+n2=1.333     #Refractive index (Second medium)
+theta1 = 0.524     #radian
+Pincident = 1     #Power(or energy?) of incident light
+ 
+#Fresnel_equations
+Rs = ((n1*math.cos(theta1)-n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n1*math.cos(theta1)+n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+Rp = ((-n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+
+ 
+
+Reff = 0.5*(Rs+Rp)     #Effective reflectance
+T = 1-Reff     #Transmittance
+PRef = Pincident*Reff     #Reflected Power = incident P * R
+PTra = Pincident*T     #Transmitted P = incident P * T
+print("Effective reflectance: {}, Transmittance: {}".format(Reff,T))
+print("Power after reflection: {}, P after Transmission: {}".format(PRef,PTra))
+
+ 
+
+#New direction
+theta2 = math.asin(n1/n2*math.sin(theta1))
+print("New direction, theta2:", theta2)
+
+import math 
+
+def ReflectOrTransmit(n1, n2, theta1, Pincident):
+    """Takes incident angle in radians, refractive inedecies of bodies and incident power. 
+    Returns reflected and transmited power along with refraction angle"""
+    #tried to make a function of the stuff above
+    Rs = ((n1*math.cos(theta1)-n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n1*math.cos(theta1)+n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+    Rp = ((-n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
+
+    Reff = 0.5*(Rs+Rp)     #Effective reflectance
+    T = 1-Reff     #Transmittance
+    PRef = Pincident*Reff     #Reflected Power = incident P * R
+    PTra = Pincident*T     #Transmitted P = incident P * T
+    
+    #new direction
+    theta2 = math.asin(n1/n2*math.sin(theta1))
+    
+    return theta2, PRef, PTra
 def boundaryDetection(old_position, new_position,matrix):
-    if(matrix[old_position.x,old_position.y,old_position.z].tissue==matrix[new_position.x,new_position.y,new_position.tissue.z]):
+    #assuming tags are inside the matrix
+    if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
         return
     else:
-        #transmit_or_reflect()//insert the function here when it's done
+        #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
+        theta2, PRef, PTra=ReflectOrTransmit()
+        #reasign values
         return
         '''
 def rouletteSurvive(photon, treshHold):
