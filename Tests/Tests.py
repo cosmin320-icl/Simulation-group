@@ -42,6 +42,7 @@ def Function2ScatterTest(Function2Scatter,finalPosition,matrix, listOfLuminositi
     assert (semaL and semaP)==True
     return 
     #NOT YET DONE, REWORKS PROPOSED
+    
 import unittest
 #trend u_s >> u_a
 
@@ -49,4 +50,14 @@ def test_removeWeight():
     assertequal(removeWeight(1, u_a = 3,  u_s = 400), 400/403)
     assertequal(removeWeight(0.33, u_a = 0.2,  u_s = 76.6), 0.329141)
     #assuming input1 is weight, 2 is absorption coefficient, & 3 is scattering coefficient
+    return 
+
+#assuming index = 0, CheckOutside = True or index != 0 
+#if index = 0 means it is vacuum/air/outside
+
+def test_CheckOutside():
+    pos.index = 0
+    assertequal(CheckOutside(pos.index), True)
+    pos.index = 1
+    assertequal(checkOutside(pos.index), False)
     return 
