@@ -51,8 +51,14 @@ def boundaryDetection(old_position, new_position,matrix):
         return
     else:
         #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
-        theta2, PRef, PTra=ReflectOrTransmit()
-        #reasign values
+        #I'll just assume the incident angle is in radians.
+        phi=math.atan((((new_position.x-old_position.x)**2+(new_position.y-old_position.y)**2)**0.5)/(new_position.z-old_position.z))
+        theta=math.atan((new_position.y-old_position.y)/(new_position.x-old_position.x))
+        #arrange call with Carlos and Sigurd, Get n1,n2, incident power from matrix.
+        theta2, PRef, PTra=ReflectOrTransmit(n1,n2,phi,Pincident);
+        #convert from polar to cartesian 
+        #add old_coordinates
+        
         return
         '''
 def rouletteSurvive(photon, treshHold):
