@@ -49,7 +49,8 @@ def boundaryDetection(old_position, new_position,matrix):
     #assuming tags are inside the matrix
     #Problem: what if the boundary is in between two identical points?
     if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
-        return
+        return new_position
+        #add PRef and PTra once they're calculated
     else:
         #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
         #I'll just assume the incident angle is in radians.
@@ -63,9 +64,8 @@ def boundaryDetection(old_position, new_position,matrix):
         theta2, PRef, PTra=ReflectOrTransmit(n1,n2,phi,Pincident)
         new_position.x=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.cos(theta2)
         new_position.y=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.sin(theta2)
-        #add old_coordinates
 
-        return
+        return new_position, PRef, PTra
         '''
 def rouletteSurvive(photon, treshHold):
     """Determines if a photon survives or not based on its weight and a set reshold
