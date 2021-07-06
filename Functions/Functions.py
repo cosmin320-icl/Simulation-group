@@ -47,6 +47,7 @@ def ReflectOrTransmit(n1, n2, theta1, Pincident):
     return theta2, PRef, PTra
 def boundaryDetection(old_position, new_position,matrix):
     #assuming tags are inside the matrix
+    #Problem: what if the boundary is in between two identical points?
     if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
         return
     else:
@@ -56,8 +57,12 @@ def boundaryDetection(old_position, new_position,matrix):
         theta=math.atan((new_position.y-old_position.y)/(new_position.x-old_position.x))
         #arrange call with Carlos and Sigurd, Get n1,n2, incident power from matrix.
         #boundary angles
+        #also assumed phi is unchanged
+        #verify that no angles are actuall cos/sin
+        #double check coordinate systems
         theta2, PRef, PTra=ReflectOrTransmit(n1,n2,phi,Pincident)
-        #convert from polar to cartesian 
+        new_position.x=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.cos(theta2)
+        new_position.y=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.sin(theta2)
         #add old_coordinates
 
         return
