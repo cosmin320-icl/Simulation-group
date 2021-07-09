@@ -27,7 +27,11 @@ print("Power after reflection: {}, P after Transmission: {}".format(PRef,PTra))
 theta2 = math.asin(n1/n2*math.sin(theta1))
 print("New direction, theta2:", theta2)
 
-import math 
+def euclid(x, y):
+    while(y):
+        x, y = y, x % y
+  
+    return x
 
 def ReflectOrTransmit(n1, n2, theta1, Pincident):
     """Takes incident angle in radians, refractive inedecies of bodies and incident power. 
@@ -45,12 +49,28 @@ def ReflectOrTransmit(n1, n2, theta1, Pincident):
     theta2 = math.asin(n1/n2*math.sin(theta1))
     
     return theta2, PRef, PTra
-def boundaryDetection(old_position, new_position,matrix):
+def boundaryDetection(old_position, new_position,matrix,Pincident):
     #assuming tags are inside the matrix
     #Problem: what if the boundary is in between two identical points?
+    '''
+    alternative boundary detection:
+    sem=false
+    directionVector.x=new_position.x-old_position.x
+    directionVector.y=new_position.y-old_position.y
+    directionVector.z=new_position.z-old_position.z
+    k=euclid(directionVector.x,euclid(directionVector.y,directionVector.z))
+    factor=0
+    while factor*k<directionVector.x and factor*k<directionVector.y and factor*k<directionVector.z:
+        for i in range(k):
+            for j in range(k):
+                for l in range(k):
+                    if(matrix[old_position.x,old_position.y,old_position.z]==matrix[old_position.x+k*factor+i,old_position.y+k*factor+j,old_position.z+k*factor+z]):
+                        sem=true
+        factor+=1
+    
+    '''
     if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
-        return new_position
-        #add PRef and PTra once they're calculated
+        return new_position,0,0
     else:
         #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
         #I'll just assume the incident angle is in radians.
