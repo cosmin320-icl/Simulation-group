@@ -34,8 +34,10 @@ def euclid(x, y):
     return x
 
 def ReflectOrTransmit(n1, n2, theta1, Pincident):
-    """Takes incident angle in radians, refractive inedecies of bodies and incident power. 
-    Returns reflected and transmited power along with refraction angle"""
+    """
+    Takes incident angle in radians, refractive inedecies of bodies and incident power. 
+    Returns reflected and transmited power along with refraction angle
+    """
     #tried to make a function of the stuff above
     Rs = ((n1*math.cos(theta1)-n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n1*math.cos(theta1)+n2*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
     Rp = ((-n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2))/(n2*math.cos(theta1)+n1*math.sqrt(1-(n1/n2*math.sin(theta1))**2)))**2
@@ -70,7 +72,7 @@ def boundaryDetection(old_position, new_position,matrix,Pincident):
     
     '''
     if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
-        return new_position,0,0
+        return new_position,0,Pincident
     else:
         #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
         #I'll just assume the incident angle is in radians.
