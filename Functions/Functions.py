@@ -74,6 +74,7 @@ def boundaryDetection(old_position, new_position,matrix,Pincident):
     if(matrix[old_position.x,old_position.y,old_position.z]==matrix[new_position.x,new_position.y,new_position.tissue.z]):
         return new_position,0,Pincident
     else:
+        rho=(new_position.x**2+new_position.y**2+new_position.z**2)**0.5
         #toDo: calculate incident angle, use matrix to get n1, n2, and indicent power? 
         #I'll just assume the incident angle is in radians.
         phi=math.atan((((new_position.x-old_position.x)**2+(new_position.y-old_position.y)**2)**0.5)/(new_position.z-old_position.z))
@@ -83,10 +84,16 @@ def boundaryDetection(old_position, new_position,matrix,Pincident):
         #also assumed phi is unchanged
         #verify that no angles are actuall cos/sin
         #double check coordinate systems
-        theta2, PRef, PTra=ReflectOrTransmit(n1,n2,phi,Pincident)
-        new_position.x=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.cos(theta2)
-        new_position.y=((new_position.x**2+new_position.y**2+new_position.z**2)**0.5)*math.sin(theta2)
-
+        theta2, PRefT, PTraT=ReflectOrTransmit(n1,n2,theta,Pincident)
+        phi2, PRefP, PTraP=ReflectOrTransmit(n1,n2,phi,Pincident)
+        #I am really not sure of how I am combining those two
+        PRef=((PRefT+PRefP)/(2*Pincident))*Pincident
+        PTra=((PTraT+PTraP)/(2*Pincident))*Pincident
+        #converting from spherical to cartesian coordinates
+        new_position.x=rho*math.sin(phi2)*math.cos(theta2)
+        new_position.y=rho*math.sin(phi2)*math.sin(theta2)
+        new_position.z=rho*math.cos(phi2)
+        #returning data
         return new_position, PRef, PTra
         '''
 def rouletteSurvive(photon, treshHold):
