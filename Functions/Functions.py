@@ -55,7 +55,7 @@ def boundaryDetection(old_position, new_position,matrix,Pincident):
     #assuming tags are inside the matrix
     #Problem: what if the boundary is in between two identical points?
     '''
-    alternative boundary detection:
+    alternative boundary detection: (use this only if the other one doesn't yield accurate results and you can lend processing time)
     sem=false
     directionVector.x=new_position.x-old_position.x
     directionVector.y=new_position.y-old_position.y
