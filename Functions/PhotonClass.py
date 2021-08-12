@@ -16,4 +16,9 @@ class PhotonClass():
             return
         else:
             return
+    def removeWeight(self, absoprtionCoeff, scatteringCoeff):
+        totalInteractionCoeff=absoprtionCoeff+scatteringCoeff
+        deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
+        self.weight-=deltaW
+        return deltaW
     
