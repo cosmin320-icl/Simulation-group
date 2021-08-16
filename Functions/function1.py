@@ -4,7 +4,7 @@ from numpy import random as rnd
 
 """
 Function 1([inputs]): 
-s=Determine Step Size 
+#s=Determine Step Size 
     s=-lnE/ut
 
 PhotonClass.MovePhoton(s): 
@@ -25,7 +25,8 @@ class PhotonClass():
         return self.newPosition
 
     #Function 1 but as a class method
-    def m_Function1 (self, cInteraction):
+    def m_Function1 (self, cAbsorption, cScattering):
+        cInteraction=cAbsorption+cScattering
         s=(-(math.log(rnd.random())/cInteraction))
         print(s)
         self.position=self.MovePhoton(s)
