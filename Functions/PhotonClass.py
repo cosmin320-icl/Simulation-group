@@ -1,6 +1,8 @@
 import random as rando
 class PhotonClass():
     def __init__(self,weight,position,direction):
+        """photon direction must be a 3D unit vector, therefore the magnitude has to be 1 
+        (any greater, and the program starts to spit complex numbers)"""
         self.weight=weight
         self.position=position
         self.direction=direction
@@ -16,4 +18,3 @@ class PhotonClass():
             return
         else:
             return
-    

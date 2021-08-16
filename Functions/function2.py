@@ -17,14 +17,11 @@ class PhotonClass():
         which is the amount of energy lost due to scattering at the end of a step."""
         delta_weight = (coeff_absorb / (coeff_absorb + coeff_scatter)) * self.weight
 
-        #return self.weight - delta_weight (should the method go this far?)
+        #Update Luminosity 
+        #Voxels[self.position[0] , self.position[1] , self.position[2] , 1] += delta_weight
+
+        self.weight -= delta_weight
         return delta_weight
-
-        """Matrix[position].luminosity+=deltaWeight 
-
-        Photon.Class.scatter() 
-
-        Return LuminosityQueue.put(Update Luminosity in List),[rework: position,luminosity], photonClass """
 
 
     def scatter (self, g):
@@ -56,10 +53,25 @@ class PhotonClass():
         # for special cases μ_z = 1 or -1? (as stated in wikipedia)
         return
 
-wan = PhotonClass (1, [1,1,1], [2,3,4])
-wan.scatter(0.5)
-print(wan.direction)
-#output : [(1.055866209337768-1.4880055503868064j), (1.583799314006652-1.7672229971970363j), (2.111732418675536-1.7442434181131221j)]
-#???
+def lum_update (Voxel_Matrix , photon , coeff_absorb, coeff_scatter):
+    """updates the luminosity of matrix created by matrix maker with delta_weight (energy absorbed by cell)
+    inputs: the matrix itself and the photon class
+    
+    **point to note** until further update, this function also does the weight subtraction i.e. absorption as well
+        ↳in the future this function would probably be something like "absorption", which does the whole process for absorption (there'll then be another function for emission)"""
 
-# update luminosity?? what is the matrix?
+    dWeight = photon.removeweight(coeff_absorb, coeff_scatter)
+
+    Voxel_Matrix[photon.position[0] , photon.position[1] , photon.position[2] ,1] += dWeight
+    #4th index is always 1, as you're always manipulating the second 3D matrix which corresponds to luminosity
+    
+    return
+
+
+Voxels = np.zeros((2,2,3,2), dtype = float) #assign_tags(sMatrix, materials) ←retrieves tag matrix from MatrixMaker.py in IO Group
+#print(Voxels)
+wan = PhotonClass (1, [1,1,1], [2,3,4])
+
+lum_update(Voxels, wan, .5, .5)
+
+print(Voxels)
