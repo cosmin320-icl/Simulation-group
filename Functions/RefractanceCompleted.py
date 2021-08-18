@@ -1,32 +1,7 @@
-from Functions.function0 import function0
-import random as rando
+
 from numpy import random as rnd
 import numpy as np
 import math
-
-class PhotonClass():
-    def __init__(self,weight,position,direction):
-        self.weight=weight
-        self.position=position
-        self.direction=direction
-        return
-    def rouletteSurvive(self,treshold):
-        if(self.weight<treshold):
-            #m is given by the 1 in m chances to survive. What value should m have?
-            m=5
-            if(rando.random()<(1/m)):
-                self.weight*=m
-            else:
-                self.weight=0
-            return
-        else:
-            return
-    def removeWeight(self, absoprtionCoeff, scatteringCoeff):
-        totalInteractionCoeff=absoprtionCoeff+scatteringCoeff
-        deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
-        self.weight-=deltaW
-        return deltaW
-
 ### Material information (Dummy values) 
 n1=1.000293     #Refractive index (First medium)
 n2=1.333     #Refractive index (Second medium)
@@ -131,77 +106,3 @@ def rouletteSurvive(photon, treshHold):
     else:
         return
         '''
-#could this be vectorized in some way
-
-
-def LuminosityCompiler(Matrix, LuminosityList):
-    "puts luminosity of voxels into layers txt file, there will be one txt file per layer"
-    for a in range(length):
-        layer = np.zeroes(height, width)
-        for i in range(0, height):
-            for j in range(0, width):
-                layer[i][j] = voxel.luminosity
-    
-        layertxt = open("Layer_{0:05d}.txt".format(i), "w+")
-        np.savetxt("Layer_{0:05d}.txt".format(i), layer, fmt="%s")
-        Snapshot.close()
-    
-    return
-def function0(vector, point, xLength = 1, yLength = 1, circular = False):
-    "inputs 1*3 arrays for point and vector, to generate a point within the plane these define and the constraints xLength and yLength"
-    defaultPlane = np.array([0, 0, 1]) #plane where coordinates are generated
-    vector = vector / sum(vector**2) ** (1/2) #normalises input vector
-
-    #generate an x and y coordinate on the (0,0,1) plane going thorugh the origin
-    if circular != False:
-        #to generate points on plane within a circle
-        x = rnd.random()*circular - circular/2
-        circular2 = 2*((circular/2)**2 - x**2)**(1/2)
-        y = rnd.random()*circular2 - circular2/2
-    else:
-        #to generate points on plane within a rectangle
-        x = rnd.random()*xLength - xLength/2
-        y = rnd.random()*yLength - yLength/2
-    
-    #finds the angle between the plane 
-    angle = -np.arccos(np.dot(defaultPlane, vector))
-    #small quirk that angle is negative, I think it is because of the order of the cross-product
-    
-    if angle == 0:
-        return np.array([x + point[0], y + point[1], 0 + point[2]]) #clause to avoid errors
-        
-    #finds line of rotation
-    r = np.cross(vector, defaultPlane)
-    #normalises this vector
-    r = r / sum(r ** 2) ** (1/2)
-    
-
-    
-
-    #rotates to wanted points and adjusts for coordinates
-    xr = point[0] + ((1-np.cos(angle))*r[0]**2 + np.cos(angle))*x + ((1-np.cos(angle))*r[0]*r[1] - np.sin(angle)*r[2])*y 
-    yr = point[1] + ((1-np.cos(angle))*r[0]*r[1] + np.sin(angle)*r[2])*x + ((1-np.cos(angle))*r[1]**2 + np.cos(angle))*y  
-    zr = point[2] + ((1-np.cos(angle))*r[0]*r[2] - np.sin(angle)*r[1])*x + ((1-np.cos(angle))*r[1]*r[2] + np.sin(angle)*r[0])*y
-    
-    #Organises coordinates xr, yr, zr into a point on the wanted plane
-    onPlane = np.array([xr, yr, zr])
-    
-    #not done, will add to integrate with photonclass
-    return onPlane
-def function1(Photon):
-    #Hopefully this is in Taiga's code. I couldn't find it
-    #s=DetermineStepSize()
-    #PhotonClass.movePhoton(s)
-    return Photon
-def function2(photon,absoprtionCoeff,scatteringCoeff):
-    deltaWeight=photon.removeWeight(absoprtionCoeff,scatteringCoeff)
-    #update luminosity in matrix
-    #scatter photon class
-    #update luminosity queue
-    #additional checks: If boundary, if transmit or reflect
-def function3(photon,treshold,tresholdSurvive):
-    if photon.weight<treshold:
-        photon.rouletteSurvive(tresholdSurvive)
-def checkOutside(position,matrixBoundaries):
-    #check if position is outside, return true
-    return False
