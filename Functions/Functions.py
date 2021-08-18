@@ -26,6 +26,55 @@ class PhotonClass():
         deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
         self.weight-=deltaW
         return deltaW
+    #Function 1 but as a class method
+    def m_Function1 (self, cAbsorption, cScattering):
+        cInteraction=cAbsorption+cScattering
+        s=(-(math.log(rnd.random())/cInteraction))
+        print(s)
+        self.position=self.MovePhoton(s)
+        return self
+    def scatter (self, g):
+        """
+        g: scattering anisotropy (-1≦g≦1). If g is 0, this generally indicates that 
+        the scattering is isotropic (i.e. no weighting in the scattering direction).
+        If g approaches 1, this indicates that the scattering is primarily in the forward direction. (Wikipedia)
+        ***
+        updates direction"""
+
+        # angles theta and phi
+        if g == 0 :
+            theta = math.acos(1 - (2 * rnd.rand()))
+        else:
+            theta = math.acos((1 / (2 * g)) * (1 + g**2 - ((1 - (g**2)) / (1 - g + 2 * g * rnd.rand()))))
+
+        phi = 2 * math.pi * rnd.rand()
+
+        #new directions (cannot update directions immediately as old values required to calculate new direction)
+        new_myu_x = (math.sin(theta) * (self.direction[0] * self.direction[2] * math.cos(phi) - self.direction[1] * math.sin(phi))) / ((1 - (self.direction[2]**2))**0.5) + (self.direction[0] * math.cos(theta))
+        new_myu_y = (math.sin(theta) * (self.direction[1] * self.direction[2] * math.cos(phi) - self.direction[0] * math.sin(phi))) / ((1 - (self.direction[2]**2))**0.5) + (self.direction[1] * math.cos(theta))
+        new_myu_z = (-1) * (1 - self.direction[2]**2)**0.5 * math.sin(theta) * math.cos(phi) + self.direction[2] * math.cos(theta)
+        
+        #update direction
+        self.direction[0] = new_myu_x
+        self.direction[1] = new_myu_y
+        self.direction[2] = new_myu_z
+
+        # for special cases μ_z = 1 or -1? (as stated in wikipedia)
+        return
+
+def lum_update (Voxel_Matrix , photon , coeff_absorb, coeff_scatter):
+    """updates the luminosity of matrix created by matrix maker with delta_weight (energy absorbed by cell)
+    inputs: the matrix itself and the photon class
+    
+    **point to note** until further update, this function also does the weight subtraction i.e. absorption as well
+        ↳in the future this function would probably be something like "absorption", which does the whole process for absorption (there'll then be another function for emission)"""
+
+    dWeight = photon.removeweight(coeff_absorb, coeff_scatter)
+
+    Voxel_Matrix[photon.position[0] , photon.position[1] , photon.position[2] ,1] += dWeight
+    #4th index is always 1, as you're always manipulating the second 3D matrix which corresponds to luminosity
+    
+    return
 
 ### Material information (Dummy values) 
 n1=1.000293     #Refractive index (First medium)
@@ -192,11 +241,12 @@ def function1(Photon):
     #Hopefully this is in Taiga's code. I couldn't find it
     #s=DetermineStepSize()
     #PhotonClass.movePhoton(s)
+    #I suggest using 0PhotonClass.m_Function1()
     return Photon
 def function2(photon,absoprtionCoeff,scatteringCoeff):
     deltaWeight=photon.removeWeight(absoprtionCoeff,scatteringCoeff)
     #update luminosity in matrix
-    #scatter photon class
+    #PhotonClass.scatter()
     #update luminosity queue
     #additional checks: If boundary, if transmit or reflect
 def function3(photon,treshold,tresholdSurvive):
