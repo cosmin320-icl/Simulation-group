@@ -3,6 +3,7 @@ import random as rando
 from numpy import random as rnd
 import numpy as np
 import math
+import numpy.random as random
 
 class PhotonClass():
     def __init__(self,weight,position,direction):
@@ -255,3 +256,29 @@ def function3(photon,treshold,tresholdSurvive):
 def checkOutside(position,matrixBoundaries):
     #check if position is outside, return true
     return False
+#Ahmed's stuff
+def updateValues(Matrix, nanoparticleArray):
+    for i in nanoparticleArray:
+    # access voxel, then do...?
+    Matrix[i[0]][i[1]][i[2]] = 1 # testing if access of matrix at positions are correct
+    # create photon using PhotonClass(). photon objects stored in list?
+    # for i in nanoparticleArray: // i is the position
+    # for j in range(photonsPerNano)
+    # photonArray.append(PhotonClass(i, weight??, direction?? ))) // weight and direction are beyond my understanding
+    return Matrix
+def CreateCoordinateArray(x, y, z):
+    # returns test matrix
+    dimensions = (y, x, z)
+    array1 = np.zeros(dimensions, dtype = int)
+    return array1
+
+def CreateParticleArray(frequency, Matrix):
+    # returns array of random voxel position in which nanoparticle == true. Used for testing
+    array = []
+    xArray = random.randint(0, np.shape(Matrix)[1], size = frequency)
+    yArray = random.randint(0, np.shape(Matrix)[0], size = frequency)
+    zArray = random.randint(0, np.shape(Matrix)[2], size = frequency)
+    for i in range(frequency):
+    randomCoordinate = (yArray[i], xArray[i], zArray[i])
+    array.append(randomCoordinate)
+    return array
