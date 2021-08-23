@@ -1,3 +1,4 @@
+from numpy.matrixlib.defmatrix import matrix
 from Functions.function0 import function0
 import random as rando
 from numpy import random as rnd
@@ -239,20 +240,32 @@ def function0(vector, point, xLength = 1, yLength = 1, circular = False):
     #not done, will add to integrate with photonclass
     return onPlane
 def function1(Photon):
+    #DO NOT USE. REPLACED BY PhotonClass.m_Function1()
     #Hopefully this is in Taiga's code. I couldn't find it
     #s=DetermineStepSize()
     #PhotonClass.movePhoton(s)
-    #I suggest using 0PhotonClass.m_Function1()
+    Photon.m_Function1()
     return Photon
-def function2(photon,absoprtionCoeff,scatteringCoeff):
+
+def function2(Matrix,photon,absoprtionCoeff,scatteringCoeff,Voxel_Matrix, LuminosityList, old_position, new_position,Pincident):
     deltaWeight=photon.removeWeight(absoprtionCoeff,scatteringCoeff)
+    #difference between matrix and voxel matrix??
     #update luminosity in matrix
+    lum_update (Voxel_Matrix , photon , absoprtionCoeff, scatteringCoeff)
     #PhotonClass.scatter()
+    photon.scatter()
     #update luminosity queue
+    LuminosityCompiler(Matrix, LuminosityList)
     #additional checks: If boundary, if transmit or reflect
+    new_position, PRef,Ptra=boundaryDetection(old_position,new_position,Matrix, Pincident)
+    #what exactly do we do with PRef?
+    Pincident=Ptra
+    return new_position, Pincident, LuminosityList,Matrix,Voxel_Matrix
+
 def function3(photon,treshold,tresholdSurvive):
     if photon.weight<treshold:
         photon.rouletteSurvive(tresholdSurvive)
+    return
 def checkOutside(position,matrixBoundaries):
     #check if position is outside, return true
     return False
