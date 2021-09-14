@@ -21,4 +21,6 @@ class PhotonClass():
         deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
         self.weight-=deltaW
         return deltaW
-    
+pho=PhotonClass(100,[1,2,1],[1,1,4])
+deltaW=pho.removeWeight(0.2,0.22)
+print(pho.weight+deltaW)
