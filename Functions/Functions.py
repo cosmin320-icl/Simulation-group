@@ -1,3 +1,4 @@
+#Declare required modules
 from numpy.matrixlib.defmatrix import matrix
 from Functions.function0 import function0
 import random as rando
@@ -5,14 +6,16 @@ from numpy import random as rnd
 import numpy as np
 import math
 import numpy.random as random
-
+#Declare PhotonClass. This is the class which stores all the properties of a photon and operations related to it
 class PhotonClass():
     def __init__(self,weight,position,direction):
         self.weight=weight
         self.position=position
         self.direction=direction
+        #End of init
         return
     def rouletteSurvive(self,treshold):
+        #Roulette survive is created in order to maintain the mathematical validity of the system. It is simply a function which terminates photons such that the stochastic analysis remains valid.
         if(self.weight<treshold):
             #m is given by the 1 in m chances to survive. What value should m have?
             m=5
@@ -24,6 +27,7 @@ class PhotonClass():
         else:
             return
     def removeWeight(self, absoprtionCoeff, scatteringCoeff):
+        #this is the functiont that removes the weight scattered by the photon and returns the difference between the current and previous weight
         totalInteractionCoeff=absoprtionCoeff+scatteringCoeff
         deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
         self.weight-=deltaW
@@ -77,7 +81,7 @@ def lum_update (Voxel_Matrix , photon , coeff_absorb, coeff_scatter):
     #4th index is always 1, as you're always manipulating the second 3D matrix which corresponds to luminosity
     
     return
-
+'''
 ### Material information (Dummy values) 
 n1=1.000293     #Refractive index (First medium)
 n2=1.333     #Refractive index (Second medium)
@@ -102,8 +106,9 @@ print("Power after reflection: {}, P after Transmission: {}".format(PRef,PTra))
 #New direction
 theta2 = math.asin(n1/n2*math.sin(theta1))
 print("New direction, theta2:", theta2)
-
+'''
 def euclid(x, y):
+    #Euclid's algorithm. please ignore
     while(y):
         x, y = y, x % y
   
