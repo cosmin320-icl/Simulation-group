@@ -32,8 +32,9 @@ class PhotonClass():
         deltaW=(absoprtionCoeff/totalInteractionCoeff)*self.weight
         self.weight-=deltaW
         return deltaW
-    #Function 1 but as a class method
-    def m_Function1 (self, cAbsorption, cScattering):
+    
+    def m_Move_Photon (self, cAbsorption, cScattering):
+        #Function 1 but as a class method
         cInteraction=cAbsorption+cScattering
         s=(-(math.log(rnd.random())/cInteraction))
         print(s)
@@ -203,7 +204,7 @@ def LuminosityCompiler(Matrix, LuminosityList):
         Snapshot.close()
     
     return
-def function0(vector, point, xLength = 1, yLength = 1, circular = False):
+def Generate_Photon(vector, point, xLength = 1, yLength = 1, circular = False):
     "inputs 1*3 arrays for point and vector, to generate a point within the plane these define and the constraints xLength and yLength"
     defaultPlane = np.array([0, 0, 1]) #plane where coordinates are generated
     vector = vector / sum(vector**2) ** (1/2) #normalises input vector
@@ -244,7 +245,7 @@ def function0(vector, point, xLength = 1, yLength = 1, circular = False):
     
     #not done, will add to integrate with photonclass
     return onPlane
-def function1(Photon):
+def Move_Photon(Photon):
     #DO NOT USE. REPLACED BY PhotonClass.m_Function1()
     #Hopefully this is in Taiga's code. I couldn't find it
     #s=DetermineStepSize()
@@ -252,7 +253,7 @@ def function1(Photon):
     Photon.m_Function1()
     return Photon
 
-def function2(Matrix,photon,absoprtionCoeff,scatteringCoeff,Voxel_Matrix, LuminosityList, old_position, new_position,Pincident):
+def Determine_Weight(Matrix,photon,absoprtionCoeff,scatteringCoeff,Voxel_Matrix, LuminosityList, old_position, new_position,Pincident):
     deltaWeight=photon.removeWeight(absoprtionCoeff,scatteringCoeff)
     #difference between matrix and voxel matrix??
     #update luminosity in matrix
@@ -267,7 +268,7 @@ def function2(Matrix,photon,absoprtionCoeff,scatteringCoeff,Voxel_Matrix, Lumino
     Pincident=Ptra
     return new_position, Pincident, LuminosityList,Matrix,Voxel_Matrix
 
-def function3(photon,treshold,tresholdSurvive):
+def Check_Weight(photon,treshold,tresholdSurvive):
     if photon.weight<treshold:
         photon.rouletteSurvive(tresholdSurvive)
     return
